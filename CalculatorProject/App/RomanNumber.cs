@@ -40,6 +40,7 @@ namespace CalculatorProject.App
                 pos -= 1;
             }
             return res;
+            // тут результат обозначает результат
         }
     }
 }
