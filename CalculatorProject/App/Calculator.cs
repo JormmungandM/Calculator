@@ -10,5 +10,6 @@ namespace CalculatorProject.App
     public class Calculator
     {
         public void Run() => Console.WriteLine("Hello, World!");
+        
     }
 }

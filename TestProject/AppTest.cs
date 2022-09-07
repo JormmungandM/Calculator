@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CalculatorProject.App;
+using System;
 
 namespace TestProject
 {
@@ -29,17 +30,20 @@ namespace TestProject
             Assert.AreEqual(RomanNumber.Parse("LV"), 55, "LV == 55");
             Assert.AreEqual(RomanNumber.Parse("XL"), 40, "XL == 40");
         }
+        
+        [TestMethod] 
+        public void RomanNumberParseN()
+        {   
+            //Dddddddddima
+            Assert.AreEqual(RomanNumber.Parse("N"), 0, "N == 0");
+
+        }
     }
 
     /*
     TDD - Test Driven Development - ðîçðàáîòêà óïðàâëÿåìîå òåñòàìè
     Ñóòü - ñíà÷àëà ïèøóòñÿ òåñòû, à ïîòîì ñîçäàþòñÿ ÏÎ, êîòîðîå óäîâëåòâîðÿåòñÿ ýòèìè òåñòàìè. 
     XP äîáàâëÿåò ìèíèìóì ïóòåé (áåç "çàïàñîâ")
-     */
-
-    //���� ������� �� �� �����
-
-
-
+     */ 
 }
 

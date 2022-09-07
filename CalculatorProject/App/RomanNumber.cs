@@ -12,8 +12,8 @@ namespace CalculatorProject.App
         //Getting a number 
         public static int Parse(String str)
         {          
-            char[] digits = { 'I','V','X','L','C','D','M'};
-            int[] digitValues = { 1, 5, 10, 50, 100, 500, 1000 };
+            char[] digits = {'N', 'I','V','X','L','C','D','M'};
+            int[] digitValues = {0, 1, 5, 10, 50, 100, 500, 1000 };
             //If we have number big when true is a below
             // IX : -1 + 10; XC +10+100; XX: +10+10; CX: +100+10;
 
