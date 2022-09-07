@@ -29,6 +29,10 @@ namespace TestProject
             Assert.AreEqual(RomanNumber.Parse("CDI"), 401, "CDI == 401");
             Assert.AreEqual(RomanNumber.Parse("LV"), 55, "LV == 55");
             Assert.AreEqual(RomanNumber.Parse("XL"), 40, "XL == 40");
+
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("NN"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("N N"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("WNWN"));
         }
         
         [TestMethod] 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,12 @@ namespace CalculatorProject.App
             int pos = str.Length - 1; // Position last number
             char digit = '\0'; //Symbol number
             int ind = 0, val = 0, res = 0; //Position number in array
+
+            IEnumerable<char> charN =
+                from ch in str
+                where ch == 'N'
+                select ch;
+            if (charN.Count() > 1) throw new ArgumentException("No more than one 'N' is allowed");
 
             while (pos != -1)
             {
