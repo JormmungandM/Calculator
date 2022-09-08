@@ -30,7 +30,6 @@ namespace CalculatorProject.App
                 {
                     throw new ArgumentException($"Invalid char {digit}");
                 }
-
                 val = digitValues[ind]; //Digit value
 
                 if (pos + 1 < str.Length - 1 &&  digit == str[pos + 1]  ) res += val;

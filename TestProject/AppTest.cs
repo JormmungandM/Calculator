@@ -1,5 +1,7 @@
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CalculatorProject.App;
+
 
 namespace TestProject
 {
@@ -15,31 +17,73 @@ namespace TestProject
             Assert.IsNotNull(calc);
         }
 
-        [TestMethod] //Парсим симыолы в числа
+        [TestMethod]
         public void RomanNumberParse()
+        { }
+
+
+        [TestMethod]
+        public void RomanNumberParse1MoreDigits()
         {
-            Assert.AreEqual(RomanNumber.Parse("I"), 1, "I == 1");
-            Assert.AreEqual(RomanNumber.Parse("IV"), 4, "IV == 4");
-            Assert.AreEqual(RomanNumber.Parse("XV"), 15, "XV == 15");
-            Assert.AreEqual(RomanNumber.Parse("XXX"), 30, "XXX == 30");
-            Assert.AreEqual(RomanNumber.Parse("CM"), 900, "CM == 900");
-            Assert.AreEqual(RomanNumber.Parse("MCMXCIX"), 1999, "MCMXCIX == 1999");
-            Assert.AreEqual(RomanNumber.Parse("CD"), 400, "CD == 400");
-            Assert.AreEqual(RomanNumber.Parse("CDI"), 401, "CDI == 401");
-            Assert.AreEqual(RomanNumber.Parse("LV"), 55, "LV == 55");
-            Assert.AreEqual(RomanNumber.Parse("XL"), 40, "XL == 40");
+            Assert.AreEqual(1, RomanNumber.Parse("I"));
+        }
+
+        [TestMethod]
+        public void RomanNumberParse2MoreDigits()
+        {
+            Assert.AreEqual(4, RomanNumber.Parse("IV"));
+            Assert.AreEqual(15, RomanNumber.Parse("XV"));
+            Assert.AreEqual(900, RomanNumber.Parse("CM"));
+            Assert.AreEqual(400, RomanNumber.Parse("CD"));
+            Assert.AreEqual(55, RomanNumber.Parse("LV"));
+            Assert.AreEqual(40, RomanNumber.Parse("XL"));
+        }
+
+        [TestMethod]
+        public void RomanNumberParse3MoreDigits()
+        {
+            Assert.AreEqual(30, RomanNumber.Parse("XXX"));
+            Assert.AreEqual(401, RomanNumber.Parse("CDI"));
+            Assert.AreEqual(1999, RomanNumber.Parse("MCMXCIX"));
+        }
+
+        [TestMethod]
+        public void RomanNumberParseInvalidDigits()
+        {
+            // with some number the function should return an exception       
+            //Assert.AreEqual(0, RomanNumber.Parse("XXA")); //this an exception 
+           
+            var exc = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XXA"); } );
+            var exp = new ArgumentException("Invalid char A");
+            Assert.AreEqual(exp.Message, exc.Message);
+
+            var exc_1 = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XMLB"); });
+            var exp_1 = new ArgumentException("Invalid char B");
+            Assert.AreEqual(exp.Message, exc.Message);
+
+            var exc_2 = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("SXII"); });
+            var exp_2 = new ArgumentException("Invalid char S");
+            Assert.AreEqual(exp.Message, exc.Message);
+
+            var exc_3 = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("MIK"); });
+            var exp_3 = new ArgumentException("Invalid char K");
+            Assert.AreEqual(exp.Message, exc.Message);
+
+        }
+
+        [TestMethod]
+        public void RomanNumberParseEmpty()
+        {
+            Assert.AreEqual(
+                "Empty string not allowed",
+                Assert.ThrowsException<ArgumentException>(
+                    () => RomanNumber.Parse("")
+                    ).Message
+              );
+
+            Assert.ThrowsException<ArgumentNullException>(
+                () => RomanNumber.Parse(""));
+
         }
     }
-
-    /*
-    TDD - Test Driven Development - ðîçðàáîòêà óïðàâëÿåìîå òåñòàìè
-    Ñóòü - ñíà÷àëà ïèøóòñÿ òåñòû, à ïîòîì ñîçäàþòñÿ ÏÎ, êîòîðîå óäîâëåòâîðÿåòñÿ ýòèìè òåñòàìè. 
-    XP äîáàâëÿåò ìèíèìóì ïóòåé (áåç "çàïàñîâ")
-     */
-
-    //���� ������� �� �� �����
-
-
-
 }
-
