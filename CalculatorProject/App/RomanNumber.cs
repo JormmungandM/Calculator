@@ -8,13 +8,63 @@ using System.Threading.Tasks;
 namespace CalculatorProject.App
 {
     //Class for working with roman number
-    public class RomanNumber
+    public record  RomanNumber
     {
+        int number;
+
+        public RomanNumber(int number_ = 0)
+        {
+            number = number_;
+        }
+
+        public int Number {
+            set { number = value;  }
+            get { return number; }
+        }
+
+        public override string ToString()
+        {
+            if (this.number == 0)
+            {
+                return "N";
+            }
+            int n = this.number;
+            String res = "";
+            String[] parts = { "M" , "CM" ,  "D" , "CD" ,  "C" , "XC" , "L" , "XL" , "X" , "IX" ,  "V" ,  "IV" ,  "I" };
+            int[] values = { 1000 , 900 ,  500 ,  400 , 100 ,  90 , 50 , 40 , 10 , 9 , 5 , 4 , 1  };
+
+            for (int j = 0; j <= parts.Length - 1; j++)
+            {
+                while (n >= values[j])
+                {
+                    n -= values[j];
+                    res += parts[j];
+
+                }
+            }
+
+            return res;
+        }
+
         //Getting a number 
         public static int Parse(String str)
         {          
-            char[] digits = {'N', 'I','V','X','L','C','D','M'};
-            int[] digitValues = {0, 1, 5, 10, 50, 100, 500, 1000 };
+            if(str == null)
+            {
+                throw new ArgumentNullException(); 
+            }
+            if ( str.Length < 1)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            if (str == "N") //Zero number
+            {
+                return 0;
+            }
+            
+
+            char[] digits = { 'I','V','X','L','C','D','M'};
+            int[] digitValues = { 1, 5, 10, 50, 100, 500, 1000 };
             //If we have number big when true is a below
             // IX : -1 + 10; XC +10+100; XX: +10+10; CX: +100+10;
 
