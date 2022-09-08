@@ -19,11 +19,6 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void RomanNumberParse()
-        { }
-
-
-        [TestMethod]
         public void RomanNumberParse1MoreDigits()
         {
             Assert.AreEqual(1, RomanNumber.Parse("I"));
@@ -75,6 +70,7 @@ namespace TestProject
         [TestMethod]
         public void RomanNumberParseEmpty()
         {
+            // ArgumentException с уведомлением  Empty string not allowed
             Assert.AreEqual(
                 "Empty string not allowed",
                 Assert.ThrowsException<ArgumentException>(
@@ -82,8 +78,9 @@ namespace TestProject
                     ).Message
               );
 
+            // ArgumentNullException без уведомлений 
             Assert.ThrowsException<ArgumentNullException>(
-                () => RomanNumber.Parse(""));
+                () => RomanNumber.Parse(null!));
 
         }
     }

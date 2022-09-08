@@ -22,12 +22,6 @@ namespace CalculatorProject.App
             char digit = '\0'; //Symbol number
             int ind = 0, val = 0, res = 0; //Position number in array
 
-            IEnumerable<char> charN =
-                from ch in str
-                where ch == 'N'
-                select ch;
-            if (charN.Count() > 1) throw new ArgumentException("No more than one 'N' is allowed");
-
             while (pos != -1)
             {
                 digit = str[pos]; //Symbol number
