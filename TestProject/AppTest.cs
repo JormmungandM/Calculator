@@ -42,6 +42,14 @@ namespace TestProject
             Assert.AreEqual(401, RomanNumber.Parse("CDI"));
             Assert.AreEqual(1999, RomanNumber.Parse("MCMXCIX"));
         }
+        
+  
+
+        [TestMethod]
+        public void RomanNumberParseN()
+        {
+            Assert.AreEqual(0, RomanNumber.Parse("N"));//Проверка N==0
+        }
 
         [TestMethod]
         public void RomanNumberParseInvalidDigits()
@@ -158,10 +166,6 @@ namespace TestProject
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("--X"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-C-X"));
         }
-
-
-
-
     }
 
 
