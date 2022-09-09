@@ -140,5 +140,28 @@ namespace TestProject
             Assert.IsFalse(rn1.Equals(rn4));
         }
 
+        [TestMethod]
+        public void RomanNumberNegative()
+        {
+            Assert.AreEqual(-10, RomanNumber.Parse("-X"));
+            Assert.AreEqual(-400, RomanNumber.Parse("-CD"));
+            Assert.AreEqual(-1900, RomanNumber.Parse("-MCM"));
+
+            RomanNumber rn = new() { Number = -10 };
+            Assert.AreEqual("-X", rn.ToString());
+            rn.Number = -90;
+            Assert.AreEqual("-XC", rn.ToString());
+
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("M-CM"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("M-"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-N"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("--X"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-C-X"));
+
+
+        }
+
+
     }
 }

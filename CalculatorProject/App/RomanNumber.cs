@@ -1,11 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CalculatorProject.App
+﻿namespace CalculatorProject.App
 {
     //Class for working with roman number
     public record  RomanNumber
@@ -28,8 +21,8 @@ namespace CalculatorProject.App
             {
                 return "N";
             }
-            int n = this.number;
-            String res = "";
+            int n = this.number < 0 ? -this.number : this.number;
+            String res = this.number < 0 ? "-" : "";
             String[] parts = { "M" , "CM" ,  "D" , "CD" ,  "C" , "XC" , "L" , "XL" , "X" , "IX" ,  "V" ,  "IV" ,  "I" };
             int[] values = { 1000 , 900 ,  500 ,  400 , 100 ,  90 , 50 , 40 , 10 , 9 , 5 , 4 , 1  };
 
@@ -39,7 +32,6 @@ namespace CalculatorProject.App
                 {
                     n -= values[j];
                     res += parts[j];
-
                 }
             }
 
@@ -53,15 +45,21 @@ namespace CalculatorProject.App
             {
                 throw new ArgumentNullException(); 
             }
-            if ( str.Length < 1)
-            {
-                throw new ArgumentNullException("Empty string not allowed");
-            }
             if (str == "N") //Zero number
             {
                 return 0;
             }
-            
+
+            bool isNegative = false;
+            if(str.StartsWith('-') )
+            {
+                isNegative = true;
+                str = str[1..];
+            }
+            if ( str.Length < 1)
+            {
+                throw new ArgumentException("Empty string not allowed");
+            }
 
             char[] digits = { 'I','V','X','L','C','D','M'};
             int[] digitValues = { 1, 5, 10, 50, 100, 500, 1000 };
@@ -89,8 +87,7 @@ namespace CalculatorProject.App
 
                 pos -= 1;
             }
-            return res;
-            // тут результат обозначает результат
+            return isNegative ? -res : res;
         }
     }
 }
