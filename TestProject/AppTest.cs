@@ -48,7 +48,10 @@ namespace TestProject
         [TestMethod]
         public void RomanNumberParseN()
         {
-            Assert.AreEqual(0, RomanNumber.Parse("N"));//Проверка N==0
+            Assert.AreEqual(0, RomanNumber.Parse("N"));//ГЏГ°Г®ГўГҐГ°ГЄГ  N==0
+            Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XN"); } );
+            Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("MNX"); } );
+            Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("NL"); } );
         }
 
         [TestMethod]
@@ -78,10 +81,10 @@ namespace TestProject
         [TestMethod]
         public void RomanNumberParseEmpty()
         {
-            // ArgumentException с уведомлением  Empty string not allowed
+            // ArgumentException Г± ГіГўГҐГ¤Г®Г¬Г«ГҐГ­ГЁГҐГ¬  Empty string not allowed
             //Assert.AreEqual( "Empty string not allowed",  Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("")).Message);
 
-            // ArgumentNullException без уведомлений 
+            // ArgumentNullException ГЎГҐГ§ ГіГўГҐГ¤Г®Г¬Г«ГҐГ­ГЁГ© 
             Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Parse(null!));
         }
 
@@ -128,15 +131,15 @@ namespace TestProject
         [TestMethod]
         public  void RomanNumberTypeTest()
         {
-            // Написать тесты которые будут пройдены тольуо если RomanNumber - ссылочный тип.
+            // ГЌГ ГЇГЁГ±Г ГІГј ГІГҐГ±ГІГ» ГЄГ®ГІГ®Г°Г»ГҐ ГЎГіГ¤ГіГІ ГЇГ°Г®Г©Г¤ГҐГ­Г» ГІГ®Г«ГјГіГ® ГҐГ±Г«ГЁ RomanNumber - Г±Г±Г»Г«Г®Г·Г­Г»Г© ГІГЁГЇ.
 
             RomanNumber rn1 = new(10);
             RomanNumber rn2 = rn1;
-            Assert.AreSame(rn1, rn2);               // rn1, rn2 - ссылка на один объект
+            Assert.AreSame(rn1, rn2);               // rn1, rn2 - Г±Г±Г»Г«ГЄГ  Г­Г  Г®Г¤ГЁГ­ Г®ГЎГєГҐГЄГІ
 
-            RomanNumber rn3 = rn1 with { };      // клониование 
-            Assert.AreNotSame(rn3, rn1);        // проверка клонирования 
-            Assert.AreEqual(rn3, rn1);              // неодниковые но равные
+            RomanNumber rn3 = rn1 with { };      // ГЄГ«Г®Г­ГЁГ®ГўГ Г­ГЁГҐ 
+            Assert.AreNotSame(rn3, rn1);        // ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ«Г®Г­ГЁГ°Г®ГўГ Г­ГЁГї 
+            Assert.AreEqual(rn3, rn1);              // Г­ГҐГ®Г¤Г­ГЁГЄГ®ГўГ»ГҐ Г­Г® Г°Г ГўГ­Г»ГҐ
             Assert.IsTrue(rn1 == rn2);              //
 
             RomanNumber rn4 = rn1 with { Number = 20 };
