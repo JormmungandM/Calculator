@@ -46,9 +46,11 @@ namespace TestProject
   
 
         [TestMethod]
-        public void RomanNumberParseN()
+        public void RomanNumberParseN()//Testing "N" letter 
         {
-            Assert.AreEqual(0, RomanNumber.Parse("N"));//Ïðîâåðêà N==0
+            Assert.AreEqual(0, RomanNumber.Parse("N"));//Added simple test for "N" letter
+
+            //Exceptions for "N" letter
             Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XN"); } );
             Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("MNX"); } );
             Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("NL"); } );
@@ -151,17 +153,20 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void RomanNumberNegative()
+        public void RomanNumberNegative() //Testing negative RomanNumber
         {
+            //tests
             Assert.AreEqual(-10, RomanNumber.Parse("-X"));
             Assert.AreEqual(-400, RomanNumber.Parse("-CD"));
             Assert.AreEqual(-1900, RomanNumber.Parse("-MCM"));
 
+            //more test
             RomanNumber rn = new() { Number = -10 };
             Assert.AreEqual("-X", rn.ToString());
             rn.Number = -90;
             Assert.AreEqual("-XC", rn.ToString());
 
+            //Exceptions. The minus must come only first and with letters, but without the letter N
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("M-CM"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("M-"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-"));

@@ -16,17 +16,22 @@
             get { return number; }
         }
 
-        public override string ToString()
+        public override string ToString()//Method convert number to string
         {
-            if (this.number == 0)
+            if (this.number == 0)//If number is a zero, then return "N" letter
             {
                 return "N";
             }
+
+            //check for negative
             int n = this.number < 0 ? -this.number : this.number;
             String res = this.number < 0 ? "-" : "";
-            String[] parts = { "M" , "CM" ,  "D" , "CD" ,  "C" , "XC" , "L" , "XL" , "X" , "IX" ,  "V" ,  "IV" ,  "I" };
+
+            //buff letter & number
+            String[] parts = { "M" , "CM" ,  "D" , "CD" ,  "C" , "XC" , "L" , "XL" , "X" , "IX" ,  "V" ,  "IV" ,  "I" }; 
             int[] values = { 1000 , 900 ,  500 ,  400 , 100 ,  90 , 50 , 40 , 10 , 9 , 5 , 4 , 1  };
 
+            //loop converting number to string
             for (int j = 0; j <= parts.Length - 1; j++)
             {
                 while (n >= values[j])
@@ -35,7 +40,7 @@
                     res += parts[j];
                 }
             }
-
+            
             return res;
         }
 
