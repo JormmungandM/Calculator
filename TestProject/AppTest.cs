@@ -117,7 +117,6 @@ namespace TestProject
 
         }
 
-
         [TestMethod]
         public  void RomanNumberTypeTest()
         {
@@ -158,10 +157,121 @@ namespace TestProject
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-N"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("--X"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-C-X"));
-
-
         }
 
 
+
+
     }
+
+
+    [TestClass]
+    public class OperationTest //Test class for operations with Roman number
+    {
+        [TestMethod]
+        public void RomanNumberAddTest()
+        {
+            RomanNumber a = new(10);
+            RomanNumber b = new(15);
+            RomanNumber c = new(25);
+            RomanNumber d = new(-15);
+
+            Assert.AreEqual(20, a.Add(a).Number);
+            Assert.AreEqual(25, a.Add(b).Number);
+            Assert.AreEqual(19, a.Add(new RomanNumber(9)).Number);
+            Assert.AreEqual(5, a.Add(new RomanNumber(-5)).Number);
+            Assert.AreEqual(10, a.Add(new RomanNumber()).Number);
+            Assert.AreEqual(15, b.Add(new RomanNumber(0)).Number);
+
+            Assert.AreEqual("XXV", a.Add(b).ToString());
+            Assert.AreEqual("-V", d.Add(a).ToString());
+
+            //Assert.ThrowsException<ArgumentNullException>(() => a.Add(null!));
+
+            Assert.AreEqual(c, a.Add(b));
+
+        }
+
+        [TestMethod]
+        public void AddValueTest()
+        {
+            var rn = new RomanNumber(10);
+            Assert.AreEqual(20,      rn.Add(10).Number);                 
+            Assert.AreEqual("V",     rn.Add(-5).ToString());            
+            Assert.AreEqual(rn,     rn.Add(0));            
+               
+        }
+
+        [TestMethod]
+        public void AddStringTest()
+        {
+            var rn = new RomanNumber(10);
+            Assert.AreEqual(30, rn.Add("XX").Number);
+            Assert.AreEqual("-XL", rn.Add("-L").ToString());
+            Assert.AreEqual(rn, rn.Add("N"));
+
+            Assert.ThrowsException<ArgumentException>(() => rn.Add(""));
+            Assert.ThrowsException<ArgumentException>(() => rn.Add("-"));
+            Assert.ThrowsException<ArgumentException>(() => rn.Add("10"));
+            Assert.ThrowsException<ArgumentException>(() => rn.Add("10"));
+            Assert.ThrowsException<ArgumentNullException>(() => rn.Add((String)null!));
+        }
+
+        [TestMethod] 
+        public void AddStaticValueTest() //Testing when the result of add operation is a prime number
+        {
+            //a little objects for testing
+            RomanNumber rn5 = new(5);
+            RomanNumber rn8 = new(8);
+            RomanNumber rn10 = new(10);
+            RomanNumber rn9 = new(9);
+            RomanNumber rn13 = new(13);
+
+            Assert.AreEqual(0, RomanNumber.Add("-V", rn5).Number);
+            Assert.AreEqual(10, RomanNumber.Add(rn10, "N").Number);
+            Assert.AreEqual(-5, RomanNumber.Add("-V", "N").Number);
+            Assert.AreEqual(13, RomanNumber.Add(rn5, rn8).Number);
+            Assert.AreEqual(20, RomanNumber.Add(rn10, 10).Number);
+            Assert.AreEqual(15, RomanNumber.Add(15, "N").Number);
+            Assert.AreEqual(-10, RomanNumber.Add(20, -30).Number);
+
+            //a little Exeptions 
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("-",  "I"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("NB",  "X"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("C",  "-"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("",  "x"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("V",  "QW"));
+
+            Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Add((String)null!, (String)null!));
+            Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Add((String)null!, 3));
+            Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Add("V", (String)null!));
+        }
+
+        [TestMethod]
+        public void AddStaticStringTest() //Testing when the result of add operation is a string
+        {
+            //a little objects for testing
+            RomanNumber rn8 = new(8);
+
+            Assert.AreEqual("-X", RomanNumber.Add(20, -30).ToString());
+            Assert.AreEqual("-V", RomanNumber.Add("-V", "N").ToString());
+            Assert.AreEqual("X", RomanNumber.Add(rn8, 2).ToString());
+            Assert.AreEqual("XVIII", RomanNumber.Add("IX", 9).ToString());
+        }
+
+        [TestMethod]
+        public void AddStaticObjectTest() //Testing when the result of add operation is a object
+        {
+            //a little objects for testing
+            RomanNumber rn5 = new(5);
+            RomanNumber rn8 = new(8);
+            RomanNumber rn10 = new(10);
+
+            Assert.AreEqual(rn10, RomanNumber.Add(5, 5));
+            Assert.AreEqual(rn5, RomanNumber.Add(15, "-X"));
+            Assert.AreEqual(rn8, RomanNumber.Add(rn10, -2));
+        }
+
+    }
+
 }
