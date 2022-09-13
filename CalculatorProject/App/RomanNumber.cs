@@ -179,14 +179,16 @@
         }
         */
 
-        //New static Add method after refactoring
+
+        /*New static Add method after refactoring
+
         static public RomanNumber Add(RomanNumber romanFirst, RomanNumber romanSecond) //Only object
         {
-            /*Refactoring - if in if
+            Refactoring - if in if
             if (romanFirst is null || romanSecond is null) {  
                 throw new ArgumentNullException(
                      romanFirst is null ? nameof(romanFirst) : nameof(romanSecond));  
-            }*/
+            }
 
             if (romanFirst is null)  throw new ArgumentNullException(nameof(romanFirst));
             if (romanSecond is null)  throw new ArgumentNullException(nameof(romanSecond));
@@ -241,35 +243,36 @@
         {
             return new RomanNumber(Parse(strFirst)).Add(strSecond);
         }
+        */
 
-
+        /*
         public static RomanNumber Add_Bad(object rn1, object rn2)
         {
-            /*  Рефакторинг - разделение условий (условия внутри условия)
-            if (rn1 is null || rn2 is null)
-            {
-                throw new ArgumentNullException(
-                    rn1 is null ? nameof(rn1) : nameof(rn2)) ;
-            }*/
+            // Рефакторинг - разделение условий (условия внутри условия)
+            //if (rn1 is null || rn2 is null)
+            //{
+            //  throw new ArgumentNullException(
+            //        rn1 is null ? nameof(rn1) : nameof(rn2)) ;
+           // }
             if (rn1 is null) throw new ArgumentNullException(nameof(rn1));
             if (rn2 is null) throw new ArgumentNullException(nameof(rn2));
 
 
-            /* Рефакторинг - соединение (перераспределение) условий
-             if (rn1 is int && rn2 is int) return new RomanNumber((int)rn1).Add((int)rn2);
-             else if (rn1 is String && rn2 is String) return new RomanNumber(RomanNumber.Parse((String)rn1)).Add((String)rn2);
-             else if (rn1 is int && rn2 is String) return new RomanNumber((int)rn1).Add((String)rn2);
-             else if (rn1 is String && rn2 is int) return new RomanNumber((int)rn2).Add((String)rn1);
+             //Рефакторинг - соединение (перераспределение) условий
+             //if (rn1 is int && rn2 is int) return new RomanNumber((int)rn1).Add((int)rn2);
+             //else if (rn1 is String && rn2 is String) return new RomanNumber(RomanNumber.Parse((String)rn1)).Add((String)rn2);
+             //else if (rn1 is int && rn2 is String) return new RomanNumber((int)rn1).Add((String)rn2);
+             //else if (rn1 is String && rn2 is int) return new RomanNumber((int)rn2).Add((String)rn1);
 
               (rn1 is int && rn2 is int) + (rn1 is int && rn2 is String) -->
              (rn1 is int)(  rn2 is int  + rn2 is String )
-              */
+              
             if (rn1 is int v1)
             {
-                /* Рефакторинг - если код присутствует во всех блоках, его нужно вынести
+                //Рефакторинг - если код присутствует во всех блоках, его нужно вынести
                 if(rn2 is int v2) return new RomanNumber(v1).Add(v2);
                 if(rn2 is String s2) return new RomanNumber(v1).Add(s2);
-                */
+                
                 var rn = new RomanNumber(v1);
                 if (rn2 is int v2) return rn.Add(v2);
                 if (rn2 is String s2) return rn.Add(s2);
@@ -283,8 +286,7 @@
 
             return new RomanNumber();
         }
-
-        public static RomanNumber Add_Normal(object obj1, object obj2)
+        public static RomanNumber Add(object obj1, object obj2)
         {
             if (obj1 is null) throw new ArgumentNullException(nameof(obj1));
             if (obj2 is null) throw new ArgumentNullException(nameof(obj2));
@@ -304,24 +306,27 @@
 
             return rn1.Add(rn2);
         }
+        */
 
-        public static RomanNumber Add_Perfect(object obj1, object obj2)
+        //Uses old static tests
+        public static RomanNumber Add(object obj1, object obj2)
         {
-            var pars = new object[] {obj1, obj2};
-            var res = new RomanNumber(0);
+            var pars = new object[] {obj1, obj2}; //array of input values
+            var res = new RomanNumber(0); //result object
 
-            RomanNumber temp;
-            for (int i = 0; i < pars.Length; i++)
+            RomanNumber temp; //temp object. Stores unpacking
+            for (int i = 0; i < pars.Length; i++)//parses input value and adds to the result
             {
-                if (pars[i] is null) throw new ArgumentNullException($"obj{i + 1 }");
+                if (pars[i] is null) throw new ArgumentNullException($"obj{i + 1 }");//if the object is null then throw exception
 
-                if (pars[i] is int val) temp = new RomanNumber(val);
-                else if (pars[i] is String str) temp = new RomanNumber(Parse(str));
-                else if (pars[i] is RomanNumber rn) temp = rn;
-                else throw new ArgumentException($"obj{i + 1 } : type unsupported");
-                res = res.Add(temp);
+                if (pars[i] is int val) temp = new RomanNumber(val); //int parse
+                else if (pars[i] is String str) temp = new RomanNumber(Parse(str)); //string parse
+                else if (pars[i] is RomanNumber rn) temp = rn;  //our object parse
+                else throw new ArgumentException($"obj{i + 1 } : type unsupported");// exception of unknown type
+
+                res = res.Add(temp);//added parsing result
             }
-            return res;
+            return res; 
         }
     }
 }
