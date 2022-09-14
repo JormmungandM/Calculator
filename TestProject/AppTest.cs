@@ -1,7 +1,6 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CalculatorProject.App;
-using System;
 
 
 namespace TestProject
@@ -46,11 +45,11 @@ namespace TestProject
   
 
         [TestMethod]
-        public void RomanNumberParseN()//Testing "N" letter 
+        public void RomanNumberParseN()   // Testing "N" letter 
         {
-            Assert.AreEqual(0, RomanNumber.Parse("N"));//Added simple test for "N" letter
+            Assert.AreEqual(0, RomanNumber.Parse("N"));  // Added simple test for "N" letter
 
-            //Exceptions for "N" letter
+            // Exceptions for "N" letter
             Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XN"); } );
             Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("MNX"); } );
             Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("NL"); } );
@@ -60,22 +59,22 @@ namespace TestProject
         public void RomanNumberParseInvalidDigits()
         {
             // with some number the function should return an exception       
-            //Assert.AreEqual(0, RomanNumber.Parse("XXA")); //this an exception 
+            // Assert.AreEqual(0, RomanNumber.Parse("XXA")); //this an exception 
            
             var exc = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XXA"); } );
-            var exp = new ArgumentException("Invalid char A");
+            var exp = new ArgumentException(Resources.GetInvalidCharMessage('A'));
             Assert.AreEqual(exp.Message, exc.Message);
 
             var exc_1 = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XMLB"); });
-            var exp_1 = new ArgumentException("Invalid char B");
+            var exp_1 = new ArgumentException(Resources.GetInvalidCharMessage('B'));
             Assert.AreEqual(exp.Message, exc.Message);
 
             var exc_2 = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("SXII"); });
-            var exp_2 = new ArgumentException("Invalid char S");
+            var exp_2 = new ArgumentException(Resources.GetInvalidCharMessage('S'));
             Assert.AreEqual(exp.Message, exc.Message);
 
             var exc_3 = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("MIK"); });
-            var exp_3 = new ArgumentException("Invalid char K");
+            var exp_3 = new ArgumentException(Resources.GetInvalidCharMessage('K'));
             Assert.AreEqual(exp.Message, exc.Message);
 
         }
@@ -84,14 +83,14 @@ namespace TestProject
         public void RomanNumberParseEmpty()
         {
             // ArgumentException ñ óâåäîìëåíèåì  Empty string not allowed
-            //Assert.AreEqual( "Empty string not allowed",  Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("")).Message);
+            // Assert.AreEqual( "Empty string not allowed",  Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("")).Message);
 
             // ArgumentNullException áåç óâåäîìëåíèé 
             Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Parse(null!));
         }
 
         [TestMethod]
-        public void RomanNumberCtor() //Testing constructors to generate numbers
+        public void RomanNumberCtor()   // Testing constructors to generate numbers
         {           
             RomanNumber romanNumber = new();
             Assert.IsNotNull(romanNumber);
@@ -153,7 +152,7 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void RomanNumberNegative() //Testing negative RomanNumber
+        public void RomanNumberNegative()  // Testing negative RomanNumber
         {
             //tests
             Assert.AreEqual(-10, RomanNumber.Parse("-X"));
@@ -178,7 +177,7 @@ namespace TestProject
 
 
     [TestClass]
-    public class OperationTest //Test class for operations with Roman number
+    public class OperationTest   // Test class for operations with Roman number
     {
         [TestMethod]
         public void RomanNumberAddTest()
@@ -230,9 +229,9 @@ namespace TestProject
         }
 
         [TestMethod] 
-        public void AddStaticValueTest() //Testing when the result of add operation is a prime number
+        public void AddStaticValueTest()  // Testing when the result of add operation is a prime number
         {
-            //a little objects for testing
+            // a little objects for testing
             RomanNumber rn5 = new(5);
             RomanNumber rn8 = new(8);
             RomanNumber rn10 = new(10);
@@ -247,7 +246,7 @@ namespace TestProject
             Assert.AreEqual(15, RomanNumber.Add(15, "N").Number);
             Assert.AreEqual(-10, RomanNumber.Add(20, -30).Number);
 
-            //a little Exeptions 
+            // a little Exeptions 
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("-",  "I"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("NB",  "X"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("C",  "-"));
@@ -260,7 +259,7 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void AddStaticStringTest() //Testing when the result of add operation is a string
+        public void AddStaticStringTest()  // Testing when the result of add operation is a string
         {
             //a little objects for testing
             RomanNumber rn8 = new(8);
@@ -272,9 +271,9 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void AddStaticObjectTest() //Testing when the result of add operation is a object
+        public void AddStaticObjectTest()   // Testing when the result of add operation is a object
         {
-            //a little objects for testing
+            // a little objects for testing
             RomanNumber rn5 = new(5);
             RomanNumber rn8 = new(8);
             RomanNumber rn10 = new(10);
