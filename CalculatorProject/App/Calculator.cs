@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 namespace CalculatorProject.App
 {
     /* Main class - start programm */
-    public class Calculator
+    public static class Calculator
     {
-        public void Run() => Console.WriteLine("Hello, it's a RNC (Roman Number Calculator)");
-
-
+        public static void Run() => Console.WriteLine("Hello, it's a RNC (Roman Number Calculator)");
 
     }
 }
