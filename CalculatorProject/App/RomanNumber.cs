@@ -4,6 +4,8 @@
     public record  RomanNumber
     {
         const char ZERO_DIGIT = 'N';
+        public static Resources Resources { get; set; } = null!;
+
         int number;
 
         public RomanNumber(int number_ = 0)
@@ -142,51 +144,51 @@
         }
 
 
-        /* Refactoring - the algorithm is repeated in each static method
-        //  Static add methods (homework)
-        //  Results of static methods - new objects
-        static public RomanNumber Add(RomanNumber a, RomanNumber b)  //Only object
+        /* Refactoring - the algorithm is repeated in each  method
+        //   add methods (homework)
+        //  Results of  methods - new objects
+         public RomanNumber Add(RomanNumber a, RomanNumber b)  //Only object
         {
             return new(a.Number + b.Number);
         }
-        static public RomanNumber Add(RomanNumber a, int b)// object plus number
+         public RomanNumber Add(RomanNumber a, int b)// object plus number
         {
             return new(a.Number + b);
         }
-        static public RomanNumber Add(int a, RomanNumber b)  // number plus object
+         public RomanNumber Add(int a, RomanNumber b)  // number plus object
         {
             return new(a + b.Number);
         }
-        static public RomanNumber Add(RomanNumber a, String b)  // number plus object
+         public RomanNumber Add(RomanNumber a, String b)  // number plus object
         {
             return new(a.Number + Parse(b));
         }
-        static public RomanNumber Add(String a, RomanNumber b)  // string plus object
+         public RomanNumber Add(String a, RomanNumber b)  // string plus object
         {
             return new(Parse(a) + b.Number);
         }
-        static public RomanNumber Add(String a, String b)  //only string
+         public RomanNumber Add(String a, String b)  //only string
         {
             return new(Parse(a) + Parse(b));
         }
-        static public RomanNumber Add(String a, int b)  // string plus number
+         public RomanNumber Add(String a, int b)  // string plus number
         {
             return new(Parse(a) + b);
         }
-        static public RomanNumber Add(int a, String b)  // number plus string
+         public RomanNumber Add(int a, String b)  // number plus string
         {
             return new(a + Parse(b));
         }
-        static public RomanNumber Add(int a, int b)  // only number
+         public RomanNumber Add(int a, int b)  // only number
         {
             return new(a + b);
         }
         */
 
 
-        /* New static Add method after refactoring
+        /* New  Add method after refactoring
 
-        static public RomanNumber Add(RomanNumber romanFirst, RomanNumber romanSecond)  // Only object
+         public RomanNumber Add(RomanNumber romanFirst, RomanNumber romanSecond)  // Only object
         {
             Refactoring - if in if
             if (romanFirst is null || romanSecond is null) {  
@@ -199,19 +201,19 @@
 
             return romanFirst.Add(romanSecond);
         }
-        static public RomanNumber Add(int integerFirst, int integerSecond) // only number
+         public RomanNumber Add(int integerFirst, int integerSecond) // only number
         {
             return new RomanNumber(integerFirst).Add(integerSecond);
         }
-        static public RomanNumber Add(String str, int integer)  // string plus number
+         public RomanNumber Add(String str, int integer)  // string plus number
         {
             return new RomanNumber(integer).Add(str);
         }
-        static public RomanNumber Add(int integer, String str)  // number plus string
+         public RomanNumber Add(int integer, String str)  // number plus string
         {
             return new RomanNumber(integer).Add(str);
         }
-        static public RomanNumber Add(RomanNumber roman, int integer)  // object plus number
+         public RomanNumber Add(RomanNumber roman, int integer)  // object plus number
         {
             if (roman is null )
             {
@@ -219,7 +221,7 @@
             }
             return roman.Add(integer);
         }
-        static public RomanNumber Add(int integer, RomanNumber roman)  // number plus object
+         public RomanNumber Add(int integer, RomanNumber roman)  // number plus object
         {
             if (roman is null)
             {
@@ -227,7 +229,7 @@
             }
             return roman.Add(integer);
         }
-        static public RomanNumber Add(RomanNumber roman, String str)  // number plus object
+         public RomanNumber Add(RomanNumber roman, String str)  // number plus object
         {
             if (roman is null)
             {
@@ -235,7 +237,7 @@
             }
             return roman.Add(str);
         }
-        static public RomanNumber Add(String str, RomanNumber roman)  // string plus object
+         public RomanNumber Add(String str, RomanNumber roman)  // string plus object
         {
             if (roman is null)
             {
@@ -243,14 +245,14 @@
             }
             return roman.Add(str);
         }
-        static public RomanNumber Add(String strFirst, String strSecond)  //only string
+         public RomanNumber Add(String strFirst, String strSecond)  //only string
         {
             return new RomanNumber(Parse(strFirst)).Add(strSecond);
         }
         */
 
         /*
-        public static RomanNumber Add_Bad(object rn1, object rn2)
+        public  RomanNumber Add_Bad(object rn1, object rn2)
         {
             // Рефакторинг - разделение условий (условия внутри условия)
             //if (rn1 is null || rn2 is null)
@@ -290,7 +292,7 @@
 
             return new RomanNumber();
         }
-        public static RomanNumber Add(object obj1, object obj2)
+        public  RomanNumber Add(object obj1, object obj2)
         {
             if (obj1 is null) throw new ArgumentNullException(nameof(obj1));
             if (obj2 is null) throw new ArgumentNullException(nameof(obj2));
@@ -312,7 +314,7 @@
         }
         */
 
-        // Uses old static tests
+        // Uses old  tests
         public static RomanNumber Add(object obj1, object obj2)
         {
             var pars = new object[] {obj1, obj2};   // array of input values

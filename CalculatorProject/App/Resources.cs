@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 namespace CalculatorProject.App
 {
     // Class with resources of program
-    public static class Resources
+    public  class Resources
     {
+
+
         // UA localization
-        public static String Culture { get; set; } = "uk-UA";
+        public  String Culture { get; set; } = "uk-UA";
 
 
         // Exceptions resources
@@ -21,10 +23,8 @@ namespace CalculatorProject.App
         // exceptions for unsupported culture
 
 
-
-
-        // Invalid Message
-        public static String GetInvalidCharMessage(char c, String? culture = null)
+        // Invalid message
+        public  String GetInvalidCharMessage(char c, String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -34,7 +34,7 @@ namespace CalculatorProject.App
                 _ => throw new Exception("Unsupported culture")
             };
         }
-        public static String GetInvalidTypeMessage(int objNumber, String type, String? culture = null)
+        public  String GetInvalidTypeMessage(int objNumber, String type, String? culture = null)
         {
             if (culture == null) culture = Culture;
             return culture switch
@@ -45,8 +45,8 @@ namespace CalculatorProject.App
             };
         }
 
-        // Empty Message
-        public static String GetEmptyObjectMessage(String? culture = null)
+        // Empty message
+        public  String GetEmptyObjectMessage(String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -56,7 +56,7 @@ namespace CalculatorProject.App
                 _ => throw new Exception("Unsupported culture")
             };
         }
-        public static String GetEmptyObjectMessage(int objNumber, String? culture = null)
+        public  String GetEmptyObjectMessage(int objNumber, String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -66,7 +66,7 @@ namespace CalculatorProject.App
                 _ => throw new Exception("Unsupported culture")
             };
         }
-        public static String GetEmptyStringMessage(String? culture = null)
+        public  String GetEmptyStringMessage(String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -77,8 +77,20 @@ namespace CalculatorProject.App
             };
         }
 
-        // N Message
-        public static String GetMisplacedNMessage(String? culture = null)
+        // System error
+        public String GetSystemErrorMessage(String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => $"Системна помилка. Програму припинено ",
+                "en-US" => $"System error. Program terminated",
+                _ => throw new Exception("Unsupported culture")
+            };
+        }
+
+        // N message
+        public  String GetMisplacedNMessage(String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -102,7 +114,7 @@ namespace CalculatorProject.App
 
 
         //Enter number
-        public static String GetEnterNumberMessage(String? culture = null)
+        public  String GetEnterNumberMessage(String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -114,7 +126,7 @@ namespace CalculatorProject.App
         }
 
         // Enter operation
-        public static String GetEnterOperationMessage(String? culture = null)
+        public  String GetEnterOperationMessage(String? culture = null)
         {
             culture ??= Culture;
             return culture switch
@@ -126,13 +138,13 @@ namespace CalculatorProject.App
         }
 
         // Result
-        public static String GetResultMessage(int res, String? culture = null) 
+        public  String GetResultMessage(String? culture = null) 
         {
             culture ??= Culture;            
             return culture switch
             {
-                "uk-UA" => $"Результат: {res}",                               
-                "en-US" => $"Result: {res}",                                    
+                "uk-UA" => $"Результат: ",                               
+                "en-US" => $"Result: ",                                    
                 _ => throw new Exception("Unsupported culture"), 
             };
         }
