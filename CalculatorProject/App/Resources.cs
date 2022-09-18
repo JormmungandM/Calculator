@@ -9,12 +9,20 @@ namespace CalculatorProject.App
     // Class with resources of program
     public  class Resources
     {
-
+        public readonly String[] cultures = { "uk-UA", "en-US" };
 
         // UA localization
         public  String Culture { get; set; } = "uk-UA";
 
-
+        private String GetAllCultures()
+        {
+            String temp = "\n";
+            for (int i = 0; i < cultures.Length; i++)
+            {
+                temp += cultures[i] + "\n";
+            }
+            return temp;
+        }
         // Exceptions resources
 
         // all methods has these clauses
@@ -34,14 +42,44 @@ namespace CalculatorProject.App
                 _ => throw new Exception("Unsupported culture")
             };
         }
-        public  String GetInvalidTypeMessage(int objNumber, String type, String? culture = null)
+        public  String GetInvalidTypeMessage( String type, String? culture = null)
         {
             if (culture == null) culture = Culture;
             return culture switch
             {
-                "uk-UA" => $"obj{objNumber}: тип '{type}' не підтримується",
-                "en-US" => $"obj{objNumber}: type '{type}' unsupported",
+                "uk-UA" => $"Тип аргумента '{type}' не підтримується",
+                "en-US" => $"Argument type '{type}' unsupported",
                 _ => throw new Exception("Unsupported culture")
+            };
+        }
+        public String GetInvalidExpressionMessage(String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => $"Недозволений вираз ",
+                "en-US" => $"Invalid expression",
+                _ => throw new Exception("Unsupported culture")
+            };
+        }
+        public String GetInvalidOperationMessage(String operation, String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => $"Недійсна операція '{operation}' ",
+                "en-US" => $"Invalid operation '{operation}'",
+                _ => throw new Exception("Unsupported culture")
+            };
+        }
+        public String GetUnsupportedCultureMessage(String? Uculture, String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => $"Непідтримувана культура {Uculture}: ",
+                "en-US" => $"Unsupported culture {Uculture}: ",
+                _ => throw new Exception("Unsupported culture"),
             };
         }
 
@@ -100,7 +138,16 @@ namespace CalculatorProject.App
                 _ => throw new Exception("Unsupported culture")
             };
         }
-
+        public String GetDivisionNMessage(String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => $"Ділення на нуль ('N') не допускається ",
+                "en-US" => $"Division by zero ('N') is not allowed",
+                _ => throw new Exception("Unsupported culture")
+            };
+        }
 
 
         ///////////////////////////////////////////////////////////////
@@ -112,8 +159,19 @@ namespace CalculatorProject.App
         // some localization (uk-UA and en-US)
         // exceptions for unsupported culture
 
+        // Select language
+        public String GetEnterLanguageMessage(String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => $"Оберіть мову: {GetAllCultures()} -> ",
+                "en-US" => $"Select language: {GetAllCultures()} -> ",
+                _ => throw new Exception("Unsupported culture"),
+            };
+        }
 
-        //Enter number
+        // Enter number
         public  String GetEnterNumberMessage(String? culture = null)
         {
             culture ??= Culture;
@@ -122,6 +180,18 @@ namespace CalculatorProject.App
                 "uk-UA" => "Введiть число: ",                                   
                 "en-US" => "Enter number: ",                                    
                 _ => throw new Exception("Unsupported culture"),   
+            };
+        }
+
+        //  Enter expression
+        public String GetExpressionMessage(String? culture = null)
+        {
+            culture ??= Culture;
+            return culture switch
+            {
+                "uk-UA" => "Введіть вираз (наприклад, XC + CD): ",
+                "en-US" => "Enter exptrssion (like XC + CD): ",
+                _ => throw new Exception("Unsupported culture"),
             };
         }
 
@@ -138,13 +208,13 @@ namespace CalculatorProject.App
         }
 
         // Result
-        public  String GetResultMessage(String? culture = null) 
+        public  String GetResultMessage(String? expression , String? result, String? culture = null) 
         {
             culture ??= Culture;            
             return culture switch
             {
-                "uk-UA" => $"Результат: ",                               
-                "en-US" => $"Result: ",                                    
+                "uk-UA" => $"Результат: {expression} = {result}",                               
+                "en-US" => $"Result: {expression} = {result}",                                    
                 _ => throw new Exception("Unsupported culture"), 
             };
         }

@@ -21,7 +21,7 @@ namespace TestProject
         public void Calculator()
         {
             //  create calc object
-            //CalculatorProject.App.Calculator calc = new();
+            CalculatorProject.App.Calculator calc = new(Resources);
             // must be not null
             //Assert.IsNotNull(calc);
         }
@@ -297,6 +297,35 @@ namespace TestProject
             Assert.AreEqual(rn5, RomanNumber.Add(15, "-X"));
             Assert.AreEqual(rn8, RomanNumber.Add(rn10, -2));
         }
+
+
+
+        [TestMethod]
+        public void MinusStaticTest()   // Testing when the result of minus operation is a object
+        {
+            RomanNumber rn = new(0);
+            RomanNumber rn_5 = new(-5);
+            RomanNumber rn8 = new(8);
+            RomanNumber rn10 = new(10);
+
+            Assert.AreEqual(6, RomanNumber.Sub(10, 4).Number);
+            Assert.AreEqual(9, RomanNumber.Sub(15, 6).Number);
+
+            Assert.AreEqual("N", RomanNumber.Sub(10, "X").ToString());
+            Assert.AreEqual(3, RomanNumber.Sub(rn8, "V").Number);
+            Assert.AreEqual(rn10, RomanNumber.Sub(15, "V"));
+
+            Assert.AreEqual("-V", RomanNumber.Sub(5, "X").ToString());
+            Assert.AreEqual("-II", RomanNumber.Sub(rn8, rn10).ToString());
+            Assert.AreEqual(rn_5, RomanNumber.Sub(15, "XX"));
+
+            Assert.ThrowsException<ArgumentException>(() => rn.Sub(""));
+            Assert.ThrowsException<ArgumentException>(() => rn.Sub("-"));
+            Assert.ThrowsException<ArgumentException>(() => rn.Sub("-N"));
+            Assert.ThrowsException<ArgumentException>(() => rn.Sub("XN"));
+        }
+
+
 
 
     }

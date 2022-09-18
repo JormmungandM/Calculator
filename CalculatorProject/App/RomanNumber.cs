@@ -8,6 +8,8 @@
 
         int number;
 
+
+
         public RomanNumber(int number_ = 0)
         {
             number = number_;
@@ -143,6 +145,61 @@
             return this.Add(  new RomanNumber(Parse(str))  );
         }
 
+
+        // Subtraction methods
+        public RomanNumber Sub(RomanNumber roman)
+        {
+            if (roman is null)
+            {
+                throw new ArgumentNullException(nameof(roman));
+            }
+            return new(this.number - roman.Number);
+        }
+        public RomanNumber Sub(int integer)
+        {
+            return this.Sub(new RomanNumber(integer));
+        }
+        public RomanNumber Sub(String str)
+        {
+            return this.Sub(new RomanNumber(Parse(str)));
+        }
+
+        //Multiplication methods
+        public RomanNumber Mul(RomanNumber roman)
+        {
+            if (roman is null)
+            {
+                throw new ArgumentNullException(nameof(roman));
+            }
+            return new(this.number * roman.Number);
+        }
+        public RomanNumber Mul(int integer)
+        {
+            return this.Mul(new RomanNumber(integer));
+        }
+        public RomanNumber Mul(String str)
+        {
+            return this.Mul(new RomanNumber(Parse(str)));
+        }
+
+        // Division methods
+        public RomanNumber Div(RomanNumber roman)
+        {
+            if (roman is null)
+            {
+                throw new ArgumentNullException(nameof(roman));
+            }
+            if (roman.Number == 0) throw new ArgumentException(Resources.GetDivisionNMessage());   // Division by zero
+            return new(this.number / roman.Number);
+        }
+        public RomanNumber Div(int integer)
+        {
+            return this.Div(new RomanNumber(integer));
+        }
+        public RomanNumber Div(String str)
+        {
+            return this.Div(new RomanNumber(Parse(str)));
+        }
 
         /* Refactoring - the algorithm is repeated in each  method
         //   add methods (homework)
@@ -316,24 +373,50 @@
 
         // Uses old  tests
         public static RomanNumber Add(object obj1, object obj2)
-        {
-            var pars = new object[] {obj1, obj2};   // array of input values
-            var res = new RomanNumber(0);         // result object
+        {            
 
-            RomanNumber temp;                       //temp object. Stores unpacking
-            for (int i = 0; i < pars.Length; i++)   //parses input value and adds to the result
-            {
-                if (pars[i] is null) throw new ArgumentNullException(Resources.GetEmptyObjectMessage(i+1));  // if the object is null then throw exception
+            var rn1 =(obj1 is RomanNumber r1) ? r1 : new RomanNumber(obj1);
+            var rn2 =(obj2 is RomanNumber r2) ? r2 : new RomanNumber(obj2);
+            return rn1.Add(rn2);
 
-                if (pars[i] is int val) temp = new RomanNumber(val);                                // int parse
-                else if (pars[i] is String str) temp = new RomanNumber(Parse(str));       // string parse
-                else if (pars[i] is RomanNumber rn) temp = rn;                                        // our object parse
-                else throw new ArgumentException(
-                    Resources.GetInvalidTypeMessage(i+1, pars[i].GetType().Name) );   // exception of unknown type
-
-                res = res.Add(temp);   // added parsing result
-            }
-            return res; 
+            //return new RomanNumber(obj1).Add(new RomanNumber(obj2));   //  objects sum
         }
+
+        public static RomanNumber Sub(object obj1, object obj2)
+        {
+            var rn1 = (obj1 is RomanNumber r1) ? r1 : new RomanNumber(obj1);
+            var rn2 = (obj2 is RomanNumber r2) ? r2 : new RomanNumber(obj2);
+            return rn1.Sub(rn2);
+        }
+
+        public static RomanNumber Mul (object obj1, object obj2)
+        {
+            var rn1 = (obj1 is RomanNumber r1) ? r1 : new RomanNumber(obj1);
+            var rn2 = (obj2 is RomanNumber r2) ? r2 : new RomanNumber(obj2);
+            return rn1.Mul(rn2);
+        }
+
+        public static RomanNumber Div(object obj1, object obj2)
+        {
+            var rn1 = (obj1 is RomanNumber r1) ? r1 : new RomanNumber(obj1);
+            var rn2 = (obj2 is RomanNumber r2) ? r2 : new RomanNumber(obj2);
+            return rn1.Div(rn2);
+        }
+
+        private RomanNumber(object number_)   // constructor exposes the value of the object
+        {
+            if (number_ is null) throw new ArgumentNullException(Resources.GetEmptyObjectMessage());  // if the object is null then throw exception
+
+            if (number_ is int val) number = val;                                                                                                       // int parse
+            else if (number_ is String str) number = Parse(str);                                                                              // string parse
+            else if (number_ is RomanNumber rn) number = rn.number;                                                                   // our object parse
+            else throw new ArgumentException(Resources.GetInvalidTypeMessage(number_.GetType().Name));   // exception of unknown type
+        }
+
+
+
+
+
+
     }
 }

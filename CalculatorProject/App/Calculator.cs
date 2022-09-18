@@ -16,8 +16,10 @@ namespace CalculatorProject.App
             Resources = resources;
         }
 
-        private void NumberEntry(String? input, RomanNumber? rn)
-        {         
+        private RomanNumber NumberEntry()
+        {
+            String? input;
+            RomanNumber? rn = null;
             do
             {
                 Console.Write(Resources.GetEnterNumberMessage());
@@ -29,7 +31,6 @@ namespace CalculatorProject.App
                 catch (ArgumentNullException)
                 {
                     Console.WriteLine("System error. Program terminated");
-                    return;
                 }
                 catch (ArgumentException ex)
                 {
@@ -37,19 +38,76 @@ namespace CalculatorProject.App
                 }
 
             } while (rn == null);
+            return rn;
+        }
 
+        public void RunOld()
+        {
+            ;
+            RomanNumber
+                rn1 = NumberEntry(),
+                    rn2 = NumberEntry();
+
+            Console.WriteLine(Resources.GetResultMessage(rn1!.ToString(), rn2!.ToString(), rn1.Add(rn2).ToString())); //Old method GetResultMessage
+
+        }
+
+        // Splitting the expressions and returning the result
+        public RomanNumber EvalExpressions (String expression)
+        {
+            String[] parts = expression!.Split(" ", StringSplitOptions.RemoveEmptyEntries); //splitting a string
+
+            if (parts.Length != 3) throw new ArgumentException(Resources.GetInvalidExpressionMessage());   // exceptions for an expression where there is more than one operation
+
+            // Create roman numbers
+            RomanNumber rn1 = new(RomanNumber.Parse(parts[0]));
+            RomanNumber rn2 = new(RomanNumber.Parse(parts[2]));
+
+
+            // will return the result of the operation selected by the user
+            return parts[1] switch
+            {
+                "+" => rn1.Add(rn2),                                                                                                             //  Addition operation
+                "-" => rn1.Sub(rn2),                                                                                                              //  Subtraction operation
+                "*" => rn1.Mul(rn2),                                                                                                              //  Multiplication operation
+                "/" => rn1.Div(rn2),                                                                                                               //  Division operation
+                _ => throw new ArgumentException(Resources.GetInvalidOperationMessage(parts[1]))      //  Exception if unsupported operation
+            };
         }
 
         public void Run()
         {
-            String? input = null;
-            RomanNumber? rn1 = null, rn2 = null;
+            String? userIn;  // User input
 
-            NumberEntry(input, rn1);
-            NumberEntry(input, rn2);
+            // Writing a message and reading a answer
+            Console.Write(Resources.GetEnterLanguageMessage());  
+            userIn = Console.ReadLine() ?? "";
 
-            Console.WriteLine(Resources.GetResultMessage() + rn1.ToString() + " + " + rn1.ToString() + " = " +rn1.Add(rn2).ToString());
+            if(Array.IndexOf(Resources.cultures, userIn) == -1)   
+                throw new Exception(Resources.GetUnsupportedCultureMessage(userIn));  // Exception if unsupported culture
+            else  
+                Resources.Culture = userIn;  // Setting user culture
 
+            RomanNumber res = null!;  // value to result operation
+            do
+            {
+                Console.Write(Resources.GetExpressionMessage());      // Expression input message
+                userIn = Console.ReadLine() ?? "";                                  // Reading a answer
+                try
+                {
+                    res = EvalExpressions(userIn);  // Using a method to get a result
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);  // Exception if invalid expression
+                }
+            }while (res is null);
+            
+            Console.WriteLine(Resources.GetResultMessage(userIn, res.ToString()));  // Getting a message with result to console
+            
         }
+
+
+
      }
 }
